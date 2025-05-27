@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapController : MonoBehaviour
-{   
+{
     public List<GameObject> terrainChunks;
     public GameObject player;
     public float checkerRadius;
@@ -11,7 +11,15 @@ public class MapController : MonoBehaviour
     public GameObject currentChunk;
 
     public PlayerMovement pm;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [Header("Optimization")]
+    public List<GameObject> spawnedChunks;
+    GameObject latestChunk;
+    public float maxOpDist; // Must be greater than the length and width of the tilemap
+    float opDist;
+    float optimezerColldown;
+    public float optimezerCooldownDur;
+
     void Start()
     {
         pm = FindObjectOfType<PlayerMovement>();
@@ -21,8 +29,9 @@ public class MapController : MonoBehaviour
     void Update()
     {
         ChunkChecker();
+        ChunkOptimazer();
     }
-    
+
     // ReSharper disable Unity.PerformanceAnalysis
     void ChunkChecker()
     {
@@ -39,71 +48,99 @@ public class MapController : MonoBehaviour
                 SpawnChunk();
             }
         }
-        else if(pm.moveDir.x <0 && pm.moveDir.y == 0)//Лево
+        else if (pm.moveDir.x < 0 && pm.moveDir.y == 0)//Лево
         {
-            if(!Physics2D.OverlapCircle(currentChunk.transform.Find("Left").position, checkerRadius, terrainMask))
+            if (!Physics2D.OverlapCircle(currentChunk.transform.Find("Left").position, checkerRadius, terrainMask))
             {
                 noTerrainPosition = currentChunk.transform.Find("Left").position;
                 SpawnChunk();
             }
         }
-        
-        else if(pm.moveDir.x ==0 && pm.moveDir.y > 0)//Вверх
+
+        else if (pm.moveDir.x == 0 && pm.moveDir.y > 0)//Вверх
         {
-            if(!Physics2D.OverlapCircle(currentChunk.transform.Find("Up").position, checkerRadius, terrainMask))
+            if (!Physics2D.OverlapCircle(currentChunk.transform.Find("Up").position, checkerRadius, terrainMask))
             {
                 noTerrainPosition = currentChunk.transform.Find("Up").position;
                 SpawnChunk();
             }
         }
-        else if(pm.moveDir.x ==0 && pm.moveDir.y < 0)//Вниз
+        else if (pm.moveDir.x == 0 && pm.moveDir.y < 0)//Вниз
         {
-            if(!Physics2D.OverlapCircle(currentChunk.transform.Find("Down").position, checkerRadius, terrainMask))
+            if (!Physics2D.OverlapCircle(currentChunk.transform.Find("Down").position, checkerRadius, terrainMask))
             {
                 noTerrainPosition = currentChunk.transform.Find("Down").position;
                 SpawnChunk();
             }
         }
-        else if(pm.moveDir.x >0 && pm.moveDir.y > 0)//Право-Вверх
+        else if (pm.moveDir.x > 0 && pm.moveDir.y > 0)//Право-Вверх
         {
-            if(!Physics2D.OverlapCircle(currentChunk.transform.Find("Right Up").position, checkerRadius, terrainMask))
+            if (!Physics2D.OverlapCircle(currentChunk.transform.Find("Right Up").position, checkerRadius, terrainMask))
             {
                 noTerrainPosition = currentChunk.transform.Find("Right Up").position;
                 SpawnChunk();
             }
         }
-        
-        else if(pm.moveDir.x <0 && pm.moveDir.y > 0)//Лево-Вверх
+
+        else if (pm.moveDir.x < 0 && pm.moveDir.y > 0)//Лево-Вверх
         {
-            if(!Physics2D.OverlapCircle(currentChunk.transform.Find("Left Up").position, checkerRadius, terrainMask))
+            if (!Physics2D.OverlapCircle(currentChunk.transform.Find("Left Up").position, checkerRadius, terrainMask))
             {
                 noTerrainPosition = currentChunk.transform.Find("Left Up").position;
                 SpawnChunk();
             }
         }
-        
-        else if(pm.moveDir.x >0 && pm.moveDir.y < 0)//Право-Вниз
+
+        else if (pm.moveDir.x > 0 && pm.moveDir.y < 0)//Право-Вниз
         {
-            if(!Physics2D.OverlapCircle(currentChunk.transform.Find("Right Down").position, checkerRadius, terrainMask))
+            if (!Physics2D.OverlapCircle(currentChunk.transform.Find("Right Down").position, checkerRadius, terrainMask))
             {
                 noTerrainPosition = currentChunk.transform.Find("Right Down").position;
                 SpawnChunk();
             }
         }
-        
-        else if(pm.moveDir.x <0 && pm.moveDir.y < 0)//Лево-Вниз
+
+        else if (pm.moveDir.x < 0 && pm.moveDir.y < 0)//Лево-Вниз
         {
-            if(!Physics2D.OverlapCircle(currentChunk.transform.Find("Left Down").position, checkerRadius, terrainMask))
+            if (!Physics2D.OverlapCircle(currentChunk.transform.Find("Left Down").position, checkerRadius, terrainMask))
             {
                 noTerrainPosition = currentChunk.transform.Find("Left Down").position;
                 SpawnChunk();
             }
         }
-       
+
     }
     void SpawnChunk()
     {
         int rand = Random.Range(0, terrainChunks.Count);
-        Instantiate(terrainChunks[rand], noTerrainPosition, Quaternion.identity);
+        latestChunk = Instantiate(terrainChunks[rand], noTerrainPosition, Quaternion.identity);
+       spawnedChunks.Add(latestChunk);
+    }
+
+    void ChunkOptimazer()
+    {
+
+        optimezerColldown -= Time.deltaTime;
+        if (optimezerColldown <=  0f)
+        {
+            optimezerColldown = optimezerCooldownDur;
+        }
+        else
+        {
+            return;
+        }
+
+        foreach (GameObject chunk in spawnedChunks)
+        {
+            opDist = Vector3.Distance(player.transform.position, chunk.transform.position);
+            if (opDist > maxOpDist)
+            {
+                chunk.SetActive(false);
+            }
+            else
+            {
+                chunk.SetActive(true);
+            }
+        }
     }
 }

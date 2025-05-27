@@ -604,11 +604,15 @@ MonoBehaviour:
   - {fileID: 298781170662244558, guid: ed2d8b9de00df3d4ab9a13e5a0e474c3, type: 3}
   - {fileID: 298781170662244558, guid: 68be26fcc57a6c545bdb5ba5edd11e2c, type: 3}
   player: {fileID: 868874035}
-  checkerRadius: 0.2
+  checkerRadius: 2
   terrainMask:
     serializedVersion: 2
     m_Bits: 64
   currentChunk: {fileID: 0}
+  pm: {fileID: 0}
+  spawnedChunks: []
+  maxOpDist: 50
+  optimezerCooldownDur: 1
 --- !u!4 &1718197959
 Transform:
   m_ObjectHideFlags: 0
