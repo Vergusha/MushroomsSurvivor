@@ -20,7 +20,7 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
     {
         currentDamage = weaponData.Damage; // Initialize current damage from weapon data
         currentSpeed = weaponData.Speed; // Initialize current speed from weapon data
-        currentCooldownDuration = Mathf.RoundToInt(weaponData.CooldownDuration); // Initialize current cooldown duration from weapon data
+        currentCooldownDuration = weaponData.CooldownDuration; // Initialize current cooldown duration from weapon data
         currentPierce = weaponData.Pierce; // Initialize current pierce value from weapon data
     }
     protected virtual void Start()
@@ -77,13 +77,22 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
         transform.rotation = Quaternion.Euler(rotation);
 
     }
-    
-    protected void OnTriggerEnter2D(Collider2D collision)
+
+    protected virtual void OnTriggerEnter2D(Collider2D col)
     {
-        if (collision.CompareTag("Enemy"))
+        if (col.CompareTag("Enemy"))
         {
-            EnemyStats enemy = collision.GetComponent<EnemyStats>();
+            EnemyStats enemy = col.GetComponent<EnemyStats>();
             enemy.TakeDamage(currentDamage); // Deal damage to the enemy
+            ReducePierce(); // Reduce the pierce value
+        }
+    }
+    void ReducePierce() //Destroy once the pierce reaches zero
+    {
+        currentPierce--; // Reduce the pierce value
+        if (currentPierce <= 0)
+        {
+            Destroy(gameObject); // Destroy the projectile if pierce is zero or less
         }
     }
 
