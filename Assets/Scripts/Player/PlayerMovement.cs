@@ -12,12 +12,15 @@ public class PlayerMovement : MonoBehaviour
         [HideInInspector]
         public float LastVerticalVector;
         [HideInInspector]
-        public Vector3 moveDir;
-        
+        public Vector2 moveDir;
+        [HideInInspector]
+         public Vector2 lastMovedVector;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        lastMovedVector =  new Vector2(1, 0f); 
     }
 
     // Update is called once per frame
@@ -41,10 +44,16 @@ public class PlayerMovement : MonoBehaviour
         if (moveDir.x != 0)
         {
             LastHorizontalVector = moveDir.x;
+            lastMovedVector = new Vector2(LastHorizontalVector, 0f);  // Add semicolon here
         }
         if (moveDir.y != 0)
         {
             LastVerticalVector = moveDir.y;
+            lastMovedVector = new Vector2(0f, LastVerticalVector);
+        }
+        if(moveDir.x != 0 && moveDir.y != 0)
+        {
+            lastMovedVector = new Vector2(LastHorizontalVector, LastVerticalVector); //While moviing diagonally, the last moved vector will be a combination of both horizontal and vertical vectors
         }
     }
 
