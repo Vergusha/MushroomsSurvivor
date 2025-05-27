@@ -7,16 +7,13 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     [Header("Weapon Stats")]
-    public GameObject prefab;
-    public float damage;
-    public float speed;
-    public float cooldownDuration;
+    public WeaponScriptableObject weaponData; // Ссылка на ScriptableObject с данными оружия
     float currentCooldown;
-    public int pierce;
+
     protected PlayerMovement pm;
     protected virtual void Start()
     {
-        currentCooldown = cooldownDuration; // Инициализация текущего времени перезарядки
+        currentCooldown = weaponData.CooldownDuration; // Инициализация текущего времени перезарядки
         pm = FindObjectOfType<PlayerMovement>(); // Поиск объекта PlayerMovement в сцене
     }
 
@@ -33,7 +30,7 @@ public class WeaponController : MonoBehaviour
     protected virtual void Attack()
     {
         // Сброс времени перезарядки
-        currentCooldown = cooldownDuration;
-        
+        currentCooldown = weaponData.CooldownDuration;
+
     }
 }
