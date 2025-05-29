@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 868874037}
   - component: {fileID: 868874036}
   - component: {fileID: 868874042}
+  - component: {fileID: 868874043}
   - component: {fileID: 868874041}
   m_Layer: 0
   m_Name: Player
@@ -394,6 +395,7 @@ MonoBehaviour:
   LastVerticalVector: 0
   moveDir: {x: 0, y: 0}
   lastMovedVector: {x: 0, y: 0}
+  characterData: {fileID: 11400000, guid: 3a1c9b46bf299ca4eb0fb4871025e986, type: 2}
 --- !u!61 &868874037
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -573,6 +575,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a848464ea793a43bd396abb02307f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &868874043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868874035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2fba59058b24d4fbaa1681164d3ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterData: {fileID: 11400000, guid: 3a1c9b46bf299ca4eb0fb4871025e986, type: 2}
 --- !u!1 &1184285139
 GameObject:
   m_ObjectHideFlags: 0
