@@ -29,5 +29,15 @@ public class EnemyStats : MonoBehaviour
         // Здесь можно добавить логику для уничтожения врага, например, воспроизведение анимации смерти или звука
         Destroy(gameObject); // Уничтожение объекта врага
     }
-    
+
+    private void OnCollisionStay2D(Collision2D col)
+    {
+        //reference the script from the collided collider and deal damage using TakeDamage method
+        if (col.gameObject.CompareTag("Player"))
+        {
+            PlayerStats playerStats = col.gameObject.GetComponent<PlayerStats>();
+            playerStats.TakeDamage(currentDamage);
+        }
+    }
+
 }

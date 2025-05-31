@@ -14,7 +14,7 @@ public class WeaponController : MonoBehaviour
     protected virtual void Start()
     {
         currentCooldown = weaponData.CooldownDuration; // Инициализация текущего времени перезарядки
-        pm = FindObjectOfType<PlayerMovement>(); // Поиск объекта PlayerMovement в сцене
+        pm = FindAnyObjectByType<PlayerMovement>(); // Поиск объекта PlayerMovement в сцене
     }
 
     // Update is called once per frame

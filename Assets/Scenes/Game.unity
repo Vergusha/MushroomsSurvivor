@@ -367,10 +367,11 @@ GameObject:
   - component: {fileID: 868874039}
   - component: {fileID: 868874038}
   - component: {fileID: 868874037}
+  - component: {fileID: 868874041}
   - component: {fileID: 868874036}
   - component: {fileID: 868874042}
   - component: {fileID: 868874043}
-  - component: {fileID: 868874041}
+  - component: {fileID: 868874044}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -588,6 +589,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterData: {fileID: 11400000, guid: 3a1c9b46bf299ca4eb0fb4871025e986, type: 2}
+  experience: 0
+  level: 1
+  experienceCap: 0
+  invincibilityDuration: 0.5
+  levelRanges:
+  - startLevel: 1
+    endLevel: 3
+    experienceCapIncrease: 100
+  - startLevel: 4
+    endLevel: 5
+    experienceCapIncrease: 200
+--- !u!114 &868874044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868874035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66282d8a87111894a9db01839a674dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1184285139
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,7 +628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1184285140
 Transform:
   m_ObjectHideFlags: 0
@@ -707,7 +731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1761647946
 Transform:
   m_ObjectHideFlags: 0
@@ -736,63 +760,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: cd318c1a9665bb2419e5f0fd6760598b, type: 2}
---- !u!1001 &1005007544762163271
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.92387956
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.38268343
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937994530230548435, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -45
-      objectReference: {fileID: 0}
-    - target: {fileID: 7876487446356324256, guid: 5900670db1bf09544b952426277fa087, type: 3}
-      propertyPath: m_Name
-      value: Knife Weapon
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5900670db1bf09544b952426277fa087, type: 3}
 --- !u!1001 &2384271468229133173
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -902,6 +869,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bat
       objectReference: {fileID: 0}
+    - target: {fileID: 7564801429928748615, guid: a5bde2871d72fdf47956c4c18f48a5ad, type: 3}
+      propertyPath: drops.Array.data[0].dropRate
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -917,4 +888,3 @@ SceneRoots:
   - {fileID: 2384271468229133173}
   - {fileID: 1718197959}
   - {fileID: 5068744392432974474}
-  - {fileID: 1005007544762163271}

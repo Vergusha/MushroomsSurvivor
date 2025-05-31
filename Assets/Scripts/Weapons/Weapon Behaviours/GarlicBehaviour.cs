@@ -19,8 +19,13 @@ public class GarlicBehaviour : MeleeWeaponBehaviour
             enemy.TakeDamage(currentDamage); // Deal damage to the enemy
             markedEnemies.Add(col.gameObject); // Mark the enemy as hit 
         }
+        else if (col.CompareTag("Prop"))
         {
-            // Handle other cases or logic here
+            if (col.gameObject.TryGetComponent(out BreakableProps breakable) && !markedEnemies.Contains(col.gameObject))
+            {
+                breakable.TakeDamage(currentDamage); // Deal damage to the breakable prop
+                markedEnemies.Add(col.gameObject); // Mark the prop as hit
+            }
         }
     }
 }

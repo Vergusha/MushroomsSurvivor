@@ -22,7 +22,7 @@ public class MapController : MonoBehaviour
 
     void Start()
     {
-        pm = FindObjectOfType<PlayerMovement>();
+        pm = FindAnyObjectByType<PlayerMovement>();
     }
 
     // Update is called once per frame

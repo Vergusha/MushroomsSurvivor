@@ -1,13 +1,14 @@
 using UnityEngine;
-using System.Collections.Generic; // Added for List<>
+using System.Collections.Generic;
+using Unity.VisualScripting; // Added for List<>
 
 public class PlayerStats : MonoBehaviour
 {
-   public CharacterScriptableObject characterData;
+    public CharacterScriptableObject characterData;
 
     //Current stats
-   float currentHealth;
-   float currentRecovery;
+    float currentHealth;
+    float currentRecovery;
     float currentMoveSpeed;
     float currentMight;
     float currentProjectileSpeed;
@@ -19,13 +20,19 @@ public class PlayerStats : MonoBehaviour
     public int experienceCap;
 
 
-        [System.Serializable]
+    [System.Serializable]
     public class LevelRange
     {
         public int startLevel;
         public int endLevel;
         public int experienceCapIncrease;
     }
+
+    //I-Frame 
+    [Header("I-Frame")]
+    public float invincibilityDuration;
+    float invincibilityTimer;
+    bool isInvincible;
     public List<LevelRange> levelRanges;
 
     void Awake()
@@ -36,11 +43,24 @@ public class PlayerStats : MonoBehaviour
         currentMoveSpeed = characterData.MoveSpeed;
         currentMight = characterData.Might;
         currentProjectileSpeed = characterData.ProjectileSpeed;
-    }   
+    }
 
     void Start()
     {
         experienceCap = levelRanges[0].experienceCapIncrease; // Initialize experience cap from the first level range
+    }
+
+    void Update()
+    {
+        // Handle invincibility timer
+        if (invincibilityTimer > 0)
+        {
+            invincibilityTimer -= Time.deltaTime;
+        }
+        else if (isInvincible)
+        {
+            isInvincible = false; // Reset invincibility when timer runs out
+        }
     }
     public void IncreaseExperience(int amount)
     {
@@ -63,6 +83,40 @@ public class PlayerStats : MonoBehaviour
                 }
             }
             experienceCap += experienceCapIncrease; // Increase the experience cap based on the level range
+        }
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        if (!isInvincible)
+        {
+            currentHealth -= dmg;
+            invincibilityTimer = invincibilityDuration;
+            isInvincible = true;
+            if (currentHealth <= 0)
+            {
+                Kill();
+            }
+        }
+    }
+
+    public void Kill()
+    {
+        // Handle player death logic here
+        Debug.Log("Player has died.");
+        // You might want to reset stats, respawn, or trigger a game over screen
+    }
+    
+    public void RestoreHealth(float amount)
+    {
+        if (currentHealth < characterData.MaxHealth)
+        {
+            currentHealth += amount;
+                    
+                    if (currentHealth > characterData.MaxHealth)
+                    {
+                        currentHealth = characterData.MaxHealth; // Ensure health does not exceed max
+                    }
         }
     }
     

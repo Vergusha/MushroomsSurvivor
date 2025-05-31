@@ -6,7 +6,7 @@ public class EnemyMovement : MonoBehaviour
     Transform player;
     void Start()
     {
-        player = FindObjectOfType<PlayerMovement>().transform; // Assuming PlayerMovement is the script attached to the player GameObject
+        player = FindAnyObjectByType<PlayerMovement>().transform; // Assuming PlayerMovement is the script attached to the player GameObject
     }
 
     // Update is called once per frame
